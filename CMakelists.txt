@@ -1,0 +1,191 @@
+#
+# Unix Tools For Windows
+#  - a native Windows implementation of common Unix utilities
+#
+# Written in 2013 by Ruben Van Boxem <vanboxem.ruben@gmail.com>
+#
+# To the extent possible under law, the author(s) have dedicated all copyright and related
+# and neighboring rights to this software to the public domain worldwide. This software is
+# distributed without any warranty.
+#
+# You should have received a copy of the CC0 Public Domain Dedication along with this software.
+# If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+#
+
+cmake_minimum_required (VERSION 2.8)
+
+project(UnixToolsForWindows)
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+set(CMAKE_CXX_FLAGS "-std=c++0x -pedantic-errors -Wextra -Wconversion -Wuninitialized -Winit-self -Wmissing-include-dirs -Wstrict-aliasing -Werror ${CMAKE_CXX_FLAGS}")
+elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+set(CMAKE_CXX_FLAGS "-std=c++0x -pedantic-errors -Wextra -Wconversion -Wuninitialized -Winit-self -Wmissing-include-dirs -Wstrict-aliasing -Werror ${CMAKE_CXX_FLAGS}")
+endif()
+
+# Optional DEVELOPMENT and FORTRAN Utilities
+# admin
+# cflow
+# ctags
+# cxref
+# delta
+# fort77
+# get
+# lex
+# nm
+# prs
+# rmdel
+# sact
+# sccs
+# unget
+# val
+# what
+# yacc
+
+# Utilities better implemented as persistent shell interpreter built-ins
+# alias
+# at
+# basename
+# batch
+# bg
+# cd
+# command
+# cp
+# crontab
+# dirname
+# echo
+# env
+# expr
+# false
+# fc
+# fg
+# getconf
+# getopts
+# hash
+# id
+# ipcrm
+# ipcs
+# jobs
+# kill
+# locale
+# localedef
+# logger
+# logname
+# m4
+# more
+# mv
+# newgrp
+# nice
+# nohup
+# pathchk
+# ps
+# pwd
+# qalter
+# qdel
+# qhold
+# qmove
+# qmsg
+# qrerun
+# qrls
+# qselect
+# qsig
+# qstat
+# qsub
+# read
+# renice
+# sh
+# sleep
+# stty
+# tabs
+# tee
+# test
+# time
+# tput
+# true
+# tty
+# type
+# ulimit
+# umask
+# unalias
+# uname
+# wait
+# who
+# write
+# xargs
+
+# Utilities not really fit for this project, or quite a bit of work all by themselves
+# ar
+# awk
+# bc
+# c99
+# gencat
+# join
+# lp
+# mailx
+# make
+# man
+# mesg
+# pax
+# pr
+# strip
+# talk
+# vi
+
+# Utilities implemented
+#add_subdirectory(asa)
+#add_subdirectory(cal)
+add_subdirectory(cat)
+#add_subdirectory(chgrp)
+#add_subdirectory(chmod)
+#add_subdirectory(chown)
+add_subdirectory(cksum)
+add_subdirectory(cmp)
+#add_subdirectory(comm)
+#add_subdirectory(compress)
+#add_subdirectory(csplit)
+#add_subdirectory(cut)
+add_subdirectory(date)
+#add_subdirectory(dd)
+#add_subdirectory(df)
+#add_subdirectory(diff)
+#add_subdirectory(du)
+#add_subdirectory(ed)
+#add_subdirectory(ex)
+add_subdirectory(expand)
+add_subdirectory(file)
+#add_subdirectory(find)
+#add_subdirectory(fold)
+#add_subdirectory(fuser)
+#add_subdirectory(grep)
+add_subdirectory(head)
+add_subdirectory(iconv)
+add_subdirectory(link)
+#add_subdirectory(ln)
+add_subdirectory(ls)
+add_subdirectory(mkdir)
+#add_subdirectory(mkfifo)
+#add_subdirectory(nl)
+#add_subdirectory(od)
+add_subdirectory(paste)
+#add_subdirectory(patch)
+add_subdirectory(printf)
+add_subdirectory(rm)
+add_subdirectory(rmdir)
+#add_subdirectory(sed)
+add_subdirectory(sort)
+add_subdirectory(split)
+#add_subdirectory(strings)
+add_subdirectory(tail)
+add_subdirectory(touch)
+#add_subdirectory(tr)
+#add_subdirectory(tsort)
+#add_subdirectory(uncompress)
+add_subdirectory(unexpand)
+#add_subdirectory(uniq)
+#add_subdirectory(unlink)
+#add_subdirectory(uucp)
+#add_subdirectory(uudecode)
+#add_subdirectory(uuencode)
+#add_subdirectory(uustat)
+#add_subdirectory(uux)
+#add_subdirectory(wc)
+#add_subdirectory(zcat)
