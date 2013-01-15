@@ -1,6 +1,6 @@
 #
 # Unix Tools For Windows
-#  - cat: concatenate and print files
+#  - paste: merge corresponding or subsequent lines of files
 #
 # Written in 2013 by Ruben Van Boxem <vanboxem.ruben@gmail.com>
 #
@@ -16,4 +16,10 @@ cmake_minimum_required(VERSION 2.6)
 
 project(paste)
 
+if(CMAKE_COMPILER_IS_GNUCXX)
+set(CMAKE_CXX_FLAGS "-std=c++0x -pedantic-errors -Wextra -Wconversion -Wuninitialized -Winit-self -Wmissing-include-dirs -Wstrict-aliasing -Werror ${CMAKE_CXX_FLAGS}")
+elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+set(CMAKE_CXX_FLAGS "-std=c++0x -pedantic-errors -Wextra -Wconversion -Wuninitialized -Winit-self -Wmissing-include-dirs -Wstrict-aliasing -Werror ${CMAKE_CXX_FLAGS}")
+endif()
 
+find_package(Boost COMPONENTS program_options REQUIRED)

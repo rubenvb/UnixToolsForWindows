@@ -1,6 +1,6 @@
 #
 # Unix Tools For Windows
-#  - cat: concatenate and print files
+#  - date: write the date and time
 #
 # Written in 2013 by Ruben Van Boxem <vanboxem.ruben@gmail.com>
 #
@@ -16,4 +16,4 @@ cmake_minimum_required(VERSION 2.6)
 
 project(date)
 
-
+add_executable(date date.cpp)

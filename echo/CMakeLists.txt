@@ -1,6 +1,6 @@
 #
 # Unix Tools For Windows
-#  - mkdir: make directories
+#  - echo: write arguments to standard output
 #
 # Written in 2013 by Ruben Van Boxem <vanboxem.ruben@gmail.com>
 #
@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-project(mkdir)
+project(echo)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
 set(CMAKE_CXX_FLAGS "-std=c++0x -pedantic-errors -Wextra -Wconversion -Wuninitialized -Winit-self -Wmissing-include-dirs -Wstrict-aliasing -Werror ${CMAKE_CXX_FLAGS}")
@@ -23,3 +23,9 @@ set(CMAKE_CXX_FLAGS "-std=c++0x -pedantic-errors -Wextra -Wconversion -Wuninitia
 endif()
 
 find_package(Boost COMPONENTS program_options REQUIRED)
+
+include_directories(${Boost_INCLUDE_DIR})
+
+add_executable(echo echo.cpp)
+
+
