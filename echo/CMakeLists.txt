@@ -22,9 +22,4 @@ elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
 set(CMAKE_CXX_FLAGS "-std=c++0x -pedantic-errors -Wextra -Wconversion -Wuninitialized -Winit-self -Wmissing-include-dirs -Wstrict-aliasing -Werror ${CMAKE_CXX_FLAGS}")
 endif()
 
-find_package(Boost COMPONENTS program_options REQUIRED)
-
-include_directories(${Boost_INCLUDE_DIR})
-
 add_executable(echo echo.cpp)
-target_link_libraries(echo ${Boost_LIBRARIES})

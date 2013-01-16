@@ -1,6 +1,6 @@
 /**
  * Unix Tools For Windows
- *  - date: write the date and time
+ *  - echo: write the date and time
  *
  * Written in 2013 by Ruben Van Boxem <vanboxem.ruben@gmail.com>
  *
@@ -13,16 +13,7 @@
  *
  */
 
-// Boost includes
-#include <boost/program_options.hpp>
-  namespace po = boost::program_options;
-
-// C++ includes
-#include <iostream>
-
-//Platform includes
-#include <io.h>
-#include <fcntl.h>
+// Windows includes
 #include <windows.h>
 
 int main()
@@ -33,10 +24,9 @@ int main()
   DWORD cChars;
   if(argc > 0)
   {
-    for(int i=1; i<argc-1; ++i)
+    for(int i=1; i<argc; ++i)
     {
       WriteConsoleW(hstdout, argv[i], DWORD(wcslen(argv[i])), &cChars, NULL);
     }
-    WriteConsoleW(hstdout, argv[argc-1], DWORD(wcslen(argv[argc-1])), &cChars, NULL);
   }
 }
