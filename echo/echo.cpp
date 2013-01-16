@@ -1,6 +1,6 @@
 /**
  * Unix Tools For Windows
- *  - date: write the date and time
+ *  - echo: write arguments to standard output
  *
  * Written in 2013 by Ruben Van Boxem <vanboxem.ruben@gmail.com>
  *
