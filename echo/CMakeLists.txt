@@ -27,5 +27,4 @@ find_package(Boost COMPONENTS program_options REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
 add_executable(echo echo.cpp)
-
-
+target_link_libraries(echo ${Boost_LIBRARIES})

@@ -13,8 +13,30 @@
  *
  */
 
-#include <boost/program_options/parsers.hpp>
+// Boost includes
+#include <boost/program_options.hpp>
+  namespace po = boost::program_options;
 
-int main(int argc, char* argv[])
+// C++ includes
+#include <iostream>
+
+//Platform includes
+#include <io.h>
+#include <fcntl.h>
+#include <windows.h>
+
+int main()
 {
+  int argc;
+  wchar_t** argv = CommandLineToArgvW(GetCommandLineW(), &argc);
+  HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
+  DWORD cChars;
+  if(argc > 0)
+  {
+    for(int i=1; i<argc-1; ++i)
+    {
+      WriteConsoleW(hstdout, argv[i], DWORD(wcslen(argv[i])), &cChars, NULL);
+    }
+    WriteConsoleW(hstdout, argv[argc-1], DWORD(wcslen(argv[argc-1])), &cChars, NULL);
+  }
 }
