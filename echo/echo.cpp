@@ -22,11 +22,8 @@ int main()
   wchar_t** argv = CommandLineToArgvW(GetCommandLineW(), &argc);
   HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
   DWORD cChars;
-  if(argc > 0)
+  for(int i=1; i<argc; ++i)
   {
-    for(int i=1; i<argc; ++i)
-    {
-      WriteConsoleW(hstdout, argv[i], DWORD(wcslen(argv[i])), &cChars, NULL);
-    }
+    WriteConsoleW(hstdout, argv[i], DWORD(wcslen(argv[i])), &cChars, NULL);
   }
 }
