@@ -16,14 +16,23 @@
 // Windows includes
 #include <windows.h>
 
+// C++ includes
+#include <iostream>
+#include <string>
+  using std::wstring;
+
 int main()
 {
   int argc;
   wchar_t** argv = CommandLineToArgvW(GetCommandLineW(), &argc);
-  HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
-  DWORD cChars;
+  HANDLE std_out = GetStdHandle(STD_OUTPUT_HANDLE);
+
   for(int i=1; i<argc; ++i)
   {
-    WriteConsoleW(hstdout, argv[i], DWORD(wcslen(argv[i])), &cChars, NULL);
+    std::wstring arg(argv[i]);
+    // Warning: failure is not detected.
+    WriteConsoleW(std_out, arg.c_str(), static_cast<DWORD>(arg.size()), NULL, NULL);
+    WriteConsoleW(std_out, L" ", 1, NULL, NULL);
   }
+  WriteConsoleW(std_out, L"\n", 1, NULL, NULL);
 }

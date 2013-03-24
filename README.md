@@ -25,7 +25,6 @@ Simple code guidelines:
    - snake_case,
    - tab size of 2 spaces,
    - functions with more than one argument will have the arguments listed vertically as is common in Win32 API.
-   - Includes ordered: local, Boost, C++
    - use C++11 where applicable. Acceptable level is MSVS2012 November CTP+ (this includes initializer_list support, although the MSVS STL is missing every single constructor for them)
 
 DISCLAIMER: this project's source code is placed under the CC0 public domain dedication.
@@ -36,6 +35,7 @@ Reserved words:
 if then else elig fi case esac for while until do done function in select ! { } time
 The BNF grammar:
 The following is the syntax of bash 2.0 in Backus−Naur Form (BNF):
+
     <letter> ::= a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|
                  A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z
     <digit> ::= 0|1|2|3|4|5|6|7|8|9
