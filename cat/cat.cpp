@@ -13,5 +13,23 @@
  *
  */
 
-int main()
-{}
+// Support include
+#include "support.h"
+
+// Boost includes
+#include <boost/spirit/include/qi.hpp>
+
+// C++ includes
+#include <fstream>
+  using std::ifstream;
+#include <ios>
+  using std::ios_base;
+#include <string>
+  using std::string;
+
+int main(int argc, char* argv[])
+{
+  const string arguments = support::commandline_arguments(argc, argv);
+
+
+}

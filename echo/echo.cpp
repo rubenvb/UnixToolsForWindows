@@ -13,26 +13,18 @@
  *
  */
 
-// Windows includes
-#include <windows.h>
+// Support include
+#include "support.h"
 
 // C++ includes
 #include <iostream>
 #include <string>
-  using std::wstring;
+  using std::string;
 
-int main()
+int main(int argc, char* argv[])
 {
-  int argc;
-  wchar_t** argv = CommandLineToArgvW(GetCommandLineW(), &argc);
-  HANDLE std_out = GetStdHandle(STD_OUTPUT_HANDLE);
+  const string arguments = support::commandline_arguments(argc, argv);
 
-  for(int i=1; i<argc; ++i)
-  {
-    std::wstring arg(argv[i]);
-    // Warning: failure is not detected.
-    WriteConsoleW(std_out, arg.c_str(), static_cast<DWORD>(arg.size()), NULL, NULL);
-    WriteConsoleW(std_out, L" ", 1, NULL, NULL);
-  }
-  WriteConsoleW(std_out, L"\n", 1, NULL, NULL);
+  support::print(arguments);
+  support::print("\n");
 }

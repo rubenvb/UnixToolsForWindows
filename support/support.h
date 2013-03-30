@@ -17,17 +17,25 @@
 #define UNIXTOOLSFORWINDOWS_SUPPORT
 
 // C++ includes
+#include <iostream>
 #include <string>
 
 namespace support
 {
+  const std::string commandline_arguments(int argc, char* argv[]);
+
+  template<typename T>
+  void print(const T& stuff)
+  {
+    std::cout << stuff;
+  }
 #ifdef _WIN32
   const std::string convert_to_utf8(const std::wstring& utf16_string);
+  const std::wstring convert_to_utf16(const std::string& utf8_string);
+
+  template<>
+  void print(const std::string& stuff);
 #endif
-  namespace commandline
-  {
-    const std::string arguments();
-  }
-}
+} // namespace support
 
 #endif
