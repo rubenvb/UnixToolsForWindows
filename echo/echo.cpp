@@ -17,14 +17,19 @@
 #include "support.h"
 
 // C++ includes
-#include <iostream>
 #include <string>
   using std::string;
 
 int main(int argc, char* argv[])
 {
-  const string arguments = support::commandline_arguments(argc, argv);
+  argv = support::commandline_arguments(argc, argv);
 
-  support::print(arguments);
-  support::print("\n");
+  if(argc >= 2)
+  {
+    support::print(argv[1]);
+    for(int i = 2; i<argc; ++i)
+      support::print(" " + string(argv[i]));
+
+    support::print("\n");
+  }
 }

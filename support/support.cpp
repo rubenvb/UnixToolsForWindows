@@ -13,10 +13,18 @@
  *
  */
 
+#define _CRT_SECURE_NO_WARNINGS
+
 // Support include
 #include "support.h"
 
 // C++ includes
+#include <cstdio>
+#include <iostream>
+  using std::istream;
+  using std::ostream;
+#include <memory>
+  using std::unique_ptr;
 #include <string>
   using std::string;
   using std::wstring;
@@ -27,10 +35,31 @@
 #ifdef _WIN32
 #define WIN32_MEAN_AND_LEAN
 #include <windows.h>
+#ifdef __GLIBCXX__
+#include <ext/stdio_filebuf.h>
+#endif
 #endif
 
 namespace support
 {
+  file::file(const string& filename, access mode)
+#ifdef _WIN32
+  : handle(_wfopen(convert_to_utf16(filename).c_str(), mode==access::read ? L"r" : mode==access::write ? L"w" : L"rw"))
+#else
+  : handle(fopen(filename.c_str(), mode==access::read ? "r" : mode==access::write ? "w" : "rw"))
+#endif
+  {
+    if(handle == nullptr)
+      throw; //TODO
+  }
+  file::file(FILE* handle)
+  : handle(handle)
+  {   }
+
+  file standard_input = file(stdin);
+  file standard_output = file(stdout);
+  file standard_error = file(stderr);
+
 #ifdef _WIN32
   const string convert_to_utf8(const wstring& utf16_string)
   {
@@ -66,22 +95,26 @@ namespace support
         return result;
     }
   }
-  const string commandline_arguments(int, char*[])
+  char** commandline_arguments(int& argc, char*[])
   {
-    int argc;
-    wchar_t** argv = CommandLineToArgvW(GetCommandLineW(), &argc);
-    if(argv == nullptr)
+    // storage
+    static vector<string> arguments;
+    arguments.reserve(argc);
+    static vector<char*> argv;
+    argv.reserve(argc);
+
+    wchar_t** wargv = CommandLineToArgvW(GetCommandLineW(), &argc);
+
+    if(wargv == nullptr)
       throw; //TODO
 
-    string arguments;
-    // skip argv[0]
-    for(int i=1; i<argc-1; ++i)
+    for(int i=0; i<=argc; ++i)
     {
-      arguments.append(convert_to_utf8(argv[i]));
-      arguments.append(' ', 1);
+      arguments.push_back(convert_to_utf8(wargv[i]));
+      argv.push_back(const_cast<char*>(arguments.back().c_str()));
     }
-    arguments.append(convert_to_utf8(argv[argc-1]));
-    return arguments;
+
+    return argv.data();
   }
   template<>
   void print<string>(const string& stuff)
@@ -92,17 +125,15 @@ namespace support
       throw; //TODO
   }
 #else
-  const string commandline_arguments(int argc, char* argv[])
+  char** commandline_arguments(int& argc, char* argv[])
   {
-    string arguments;
-    // skip argv[0]
-    for(int i=1; i<argc-1; ++i)
-    {
-      arguments.append(argv[i]);
-      arguments.append(' ', 1);
-    }
-    arguments.append(argv[argc-1]);
-    return arguments;
+    return argv
   }
 #endif
+  template<>
+  void print<vector<string>>(const vector<string>& stuff)
+  {
+  for(auto&& item : stuff)
+    print(item);
+  }
 } // namespace support

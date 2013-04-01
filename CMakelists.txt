@@ -22,7 +22,7 @@ elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
 set(CMAKE_CXX_FLAGS "-std=c++0x -pedantic-errors -Weverything -Werror ${CMAKE_CXX_FLAGS}")
 endif()
 
-find_package(Boost REQUIRED)
+find_package(Boost COMPONENTS program_options REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
 # Support library
@@ -56,7 +56,6 @@ include_directories(support)
 # bg
 # cd
 # command
-# cp
 # crontab
 # dirname
 # echo
@@ -140,16 +139,17 @@ include_directories(support)
 #add_executable(asa)
 #add_executable(cal)
 add_executable(cat cat/cat.cpp)
-target_link_libraries(cat support)
+target_link_libraries(cat support ${Boost_LIBRARIES})
 #add_executable(chgrp)
 #add_executable(chmod)
 #add_executable(chown)
 add_executable(cksum cksum/cksum.cpp)
 add_executable(cmp cmp/cmp.cpp)
-#add_subdirectory(comm)
-#add_subdirectory(compress)
-#add_subdirectory(csplit)
-#add_subdirectory(cut)
+#add_executable(comm)
+#add_executable(compress)
+#add_executable(cp)
+#add_executable(csplit)
+#add_executable(cut)
 add_executable(date date/date.cpp)
 #add_executable(dd)
 #add_executable(df)

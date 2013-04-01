@@ -17,18 +17,53 @@
 #define UNIXTOOLSFORWINDOWS_SUPPORT
 
 // C++ includes
+#include <cstddef>
+#include <cstdio>
 #include <iostream>
+#include <iterator>
+#include <memory>
 #include <string>
+#include <vector>
 
 namespace support
 {
-  const std::string commandline_arguments(int argc, char* argv[]);
+  // because Unicode, and because binary I/O.
+  class file
+  {
+  public:
+    enum class access { read, write, readwrite };
+    file(const std::string& filename,
+         access mode);
+    file(FILE* handle);
 
-  template<typename T>
+    std::size_t read_some(const std::size_t bytes_to_read,
+                          std::vector<char>& stuff)
+    {
+      return std::fread(&stuff[0], sizeof(char), bytes_to_read, handle);
+    }
+    std::size_t write(const std::size_t bytes_to_write,
+                      std::vector<char>& stuff)
+    {
+      return std::fwrite(&stuff[0], sizeof(char), bytes_to_write, handle);
+    }
+
+  private:
+    FILE* handle; // C file handle
+  };
+
+  extern file standard_input;
+  extern file standard_output;
+  extern file standard_error;
+
+  char** commandline_arguments(int& argc, char* argv[]);
+
+  template<typename T> // backup for laziness
   void print(const T& stuff)
   {
     std::cout << stuff;
   }
+  template<>
+  void print(const std::vector<std::string>& stuff);
 #ifdef _WIN32
   const std::string convert_to_utf8(const std::wstring& utf16_string);
   const std::wstring convert_to_utf16(const std::string& utf8_string);
