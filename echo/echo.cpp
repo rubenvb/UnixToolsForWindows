@@ -23,13 +23,8 @@
 int main(int argc, char* argv[])
 {
   argv = support::commandline_arguments(argc, argv);
+  for(int i = 1; i<argc; ++i)
+    support::print(string(argv[i]) + " ");
 
-  if(argc >= 2)
-  {
-    support::print(argv[1]);
-    for(int i = 2; i<argc; ++i)
-      support::print(" " + string(argv[i]));
-
-    support::print("\n");
-  }
+  support::print("\n");
 }

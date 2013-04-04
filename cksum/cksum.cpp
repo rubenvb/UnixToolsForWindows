@@ -13,5 +13,25 @@
  *
  */
 
-int main()
-{}
+// Support include
+#include "support.h"
+
+// Boost includes
+#include <boost/program_options.hpp>
+  namespace po = boost::program_options;
+
+int main(int argc, char* argv[])
+{
+  argv = support::commandline_arguments(argc, argv);
+
+  std::vector<std::string> input;
+  po::options_description options("Options");
+  options.add_options()("file", po::value(&input), "input");
+
+  po::positional_options_description file_options;
+  file_options.add("file", -1);
+
+  po::variables_map vm;
+  po::store(po::command_line_parser(argc, argv).options(options).positional(file_options).run(), vm);
+  po::notify(vm);
+}

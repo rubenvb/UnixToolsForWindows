@@ -44,13 +44,13 @@ namespace support
 {
   file::file(const string& filename, access mode)
 #ifdef _WIN32
-  : handle(_wfopen(convert_to_utf16(filename).c_str(), mode==access::read ? L"r" : mode==access::write ? L"w" : L"rw"))
+  : handle(_wfopen(convert_to_utf16(filename).c_str(), mode==access::read ? L"rb" : mode==access::write ? L"wb" : L"rwb"))
 #else
-  : handle(fopen(filename.c_str(), mode==access::read ? "r" : mode==access::write ? "w" : "rw"))
+  : handle(fopen(filename.c_str(), mode==access::read ? "rb" : mode==access::write ? "wb" : "rwb"))
 #endif
   {
     if(handle == nullptr)
-      throw; //TODO
+      throw std::runtime_error("Failed to open file: " + filename);
   }
   file::file(FILE* handle)
   : handle(handle)
@@ -108,12 +108,11 @@ namespace support
     if(wargv == nullptr)
       throw; //TODO
 
-    for(int i=0; i<=argc; ++i)
+    for(int i=0; i<argc; ++i)
     {
       arguments.push_back(convert_to_utf8(wargv[i]));
       argv.push_back(const_cast<char*>(arguments.back().c_str()));
     }
-
     return argv.data();
   }
   template<>
