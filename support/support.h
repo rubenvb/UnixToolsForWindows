@@ -13,8 +13,8 @@
  *
  */
 
-#ifndef UNIXTOOLSFORWINDOWS_SUPPORT
-#define UNIXTOOLSFORWINDOWS_SUPPORT
+#ifndef UNIXTOOLSFORWINDOWS_SUPPORT_H
+#define UNIXTOOLSFORWINDOWS_SUPPORT_H
 
 // C++ includes
 #include <cstddef>
@@ -38,14 +38,14 @@ namespace support
     file(FILE* handle);
 
     std::size_t read_some(const std::size_t bytes_to_read,
-                          std::vector<char>& stuff)
+                          char* buffer)
     {
-      return std::fread(&stuff[0], sizeof(char), bytes_to_read, handle);
+      return std::fread(buffer, sizeof(char), bytes_to_read, handle);
     }
     std::size_t write(const std::size_t bytes_to_write,
-                      std::vector<char>& stuff)
+                      char* buffer)
     {
-      return std::fwrite(&stuff[0], sizeof(char), bytes_to_write, handle);
+      return std::fwrite(buffer, sizeof(char), bytes_to_write, handle);
     }
 
   private:

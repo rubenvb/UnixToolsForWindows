@@ -21,6 +21,8 @@
   namespace po =  boost::program_options;
 
 // C++ includes
+#include <array>
+  using std::array;
 #include <iostream>
   using std::cout;
 #include <string>
@@ -37,6 +39,7 @@
 int main(int argc, char* argv[])
 try
 {
+// Set binary I/O
   // calling POSIX freopen seems to have strange side effects...
   // http://pubs.opengroup.org/onlinepubs/9699919799/functions/freopen.html
 #ifdef _WIN32
@@ -47,7 +50,7 @@ try
   argv = support::commandline_arguments(argc, argv);
 
   std::vector<std::string> input;
-  po::options_description options("cat [-u] [file...]\nUsage");
+  po::options_description options("cat [-u] [file...]\nArguments");
   options.add_options()("help", "Show help output.")
                        (",u", "Write bytes from the input file to the standard output without delay as each is read.");
   po::options_description hidden("Hidden options");
@@ -56,7 +59,7 @@ try
   all.add(options).add(hidden);
 
   po::positional_options_description file_options;
-  file_options.add("file", -1);
+  file_options.add("files", -1);
 
   po::variables_map vm;
   po::store(po::command_line_parser(argc, argv).options(all).positional(file_options).run(), vm);
@@ -64,7 +67,11 @@ try
 
   if(vm.count("help"))
   {
-    std::cout << options;
+    std::cout << "cat: concatenate and print files\n"
+                 "Usage: cat [file...]\n"
+              << options
+              << "Operands:\n"
+                 "  file...\t\tA pathname of an input file. If no file operands are specified, the standard input shall be used. If a file is \'-\', the cat utility shall read from the standard input at that point in the sequence. The cat utility shall not close and reopen standard input when it is referenced in this way, but shall accept multiple occurrences of \'-\' as a file operand.";
     return 0;
   }
 
@@ -73,15 +80,15 @@ try
     buffer_size = 1;
 
   vector<char> buffer;
-  buffer.reserve(buffer_size);
+  buffer.resize(buffer_size);
   for(auto&& filename : input)
   {
     if(filename == "-")
     {
       while(true)
       {
-        size_t bytes_read = support::standard_input.read_some(buffer_size, buffer);
-        support::standard_output.write(bytes_read, buffer);
+        size_t bytes_read = support::standard_input.read_some(buffer_size, &buffer[0]);
+        support::standard_output.write(bytes_read, buffer.data());
         if(bytes_read < buffer_size)
           break;
       }
@@ -92,9 +99,8 @@ try
 
       while(true)
       {
-        size_t bytes_read = current.read_some(buffer_size, buffer);
-        support::standard_output.write(bytes_read, buffer);
-        std::cerr << "read and wrote " << bytes_read << "\n" << "bytes.\n";
+        size_t bytes_read = current.read_some(buffer_size, &buffer[0]);
+        support::standard_output.write(bytes_read, buffer.data());
         if(bytes_read < buffer_size)
           break;
       }
@@ -104,4 +110,5 @@ try
 catch(std::exception& e)
 {
   std::cerr << e.what();
+  return 1; //TODO
 }
