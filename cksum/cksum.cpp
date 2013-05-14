@@ -18,7 +18,7 @@
 
 // Boost includes
 #include <boost/crc.hpp>
-  typedef boost::crc_optimal<32, 0x04C11DB7, 0, 0xFFFFFFFF, false, false> cksum_crc_type;
+  typedef boost::crc_optimal<32, 0x04C11DB7, 0, 0xFFFFFFFF, false, false> cksum_crc_type; // closest to POSIX, not perfect per spec though...
 #include <boost/lexical_cast.hpp>
 #include <boost/program_options.hpp>
   namespace po = boost::program_options;
